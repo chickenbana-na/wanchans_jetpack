@@ -1,0 +1,39 @@
+using UnityEngine;
+
+public class PlayerShoot : MonoBehaviour
+{
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 10f;
+    public float fireCooldown = 0.5f; //쿨타임
+
+    private float lastFireTime = 0f;
+    private int flag = 1; // 바라보는 방향 발사
+
+    void Update()
+    {
+        float dx = Input.GetAxisRaw("Horizontal");
+
+        
+        if (dx > 0) flag = 1;
+        else if (dx < 0) flag = 2;
+
+    
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastFireTime + fireCooldown)
+        {
+            Fire();
+            lastFireTime = Time.time;
+        }
+    }
+
+    void Fire()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+        if (flag == 1)
+            rb.linearVelocity = Vector2.right * bulletSpeed;
+        else          
+            rb.linearVelocity = Vector2.left * bulletSpeed;
+    }
+}

@@ -1,25 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-//collider의 istrigger는 on으로 설정해야 함
-//player의 좌표는 중앙 아래로 설정
-public class Platform : MonoBehaviour
+public class platform : MonoBehaviour
 {
     float thickness;
 
     void Start()
     {
-        thickness = gameObject.Transform.localScale.y;
+        thickness = transform.localScale.y;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Vecter3 otp = other.transform.position;
+        Vector3 otp = other.transform.position;
         if (otp.y > transform.position.y)
         {
             other.transform.position = new Vector3(otp.x, transform.position.y + (thickness / 2), 0);
-            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         }
     }
 }

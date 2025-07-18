@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class PlayerRotateByInput : MonoBehaviour
+{
+    void Update()
+    {
+        float dx = Input.GetAxisRaw("Horizontal");
+
+        Vector3 scale = transform.localScale;
+
+        if (dx > 0)
+            scale.x = Mathf.Abs(scale.x); 
+        else if (dx < 0)
+            scale.x = -Mathf.Abs(scale.x); 
+
+        transform.localScale = scale;
+
+    }
+}

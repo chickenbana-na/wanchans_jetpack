@@ -15,7 +15,7 @@ public class platform : MonoBehaviour
         if (otp.y > transform.position.y)
         {
             other.transform.position = new Vector3(otp.x, transform.position.y + (thickness / 2), 0);
-            other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            other.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
         }
     }
 }

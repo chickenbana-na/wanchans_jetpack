@@ -1,0 +1,39 @@
+using UnityEngine;
+
+public class movelimit : MonoBehaviour
+{
+    public float speed = 5f;
+
+    private Camera cam;
+    private Vector2 minBounds;
+    private Vector2 maxBounds;
+    private float halfWidth;
+    private float halfHeight;
+
+    void Start()
+    {
+        cam = Camera.main;
+
+        Vector3 bounds = GetComponent<SpriteRenderer>().bounds.extents;
+        halfWidth = bounds.x;
+        halfHeight = bounds.y;
+
+        minBounds = cam.ViewportToWorldPoint(new Vector3(0, 0));
+        maxBounds = cam.ViewportToWorldPoint(new Vector3(1, 1));
+    }
+
+    void Update()
+    {
+        float dx = Input.GetAxisRaw("Horizontal");
+        float dy = Input.GetAxisRaw("Vertical");
+
+        Vector3 move = new Vector3(dx, dy, 0).normalized * speed * Time.deltaTime;
+        Vector3 newPos = transform.position + move;
+
+ 
+        newPos.x = Mathf.Clamp(newPos.x, minBounds.x + halfWidth, maxBounds.x - halfWidth);
+        newPos.y = Mathf.Clamp(newPos.y, minBounds.y + halfHeight, maxBounds.y - halfHeight);
+
+        transform.position = newPos;
+    }
+}
